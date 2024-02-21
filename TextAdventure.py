@@ -591,12 +591,18 @@ def generateWorld(returnPlayer = True): #TODO : Remove / Save to JSON
     broken_crate = Interactable("Broken Crate", "The crate has been broken open.", takeAble = True, customUseText = "It's not useful anymore.")
     crate = Interactable("Wooden Crate", "There doesn't look like a way to open this.", takeAble = True, customUseText = "You need to break this to see what is inside.", breakAble = True, breakContent = broken_crate)
     sword = Interactable("Silvered Sword", "An honored family blade, kept in pristine condition", takeAble = True, customUseText = "The sword feels good in your hands.")
-    
+    note1 = Interactable("First Note", "A note, pretty straight forward", takeAble = False, customUseText = "This is the content of the first note")
+    note2 = Interactable("Second Note", "A note, pretty straight forward", takeAble = False, customUseText = "This is the content of the second note")
+    note3 = Interactable("Third Note", "A note, pretty straight forward", takeAble = False, customUseText = "This is the content of the third note")
     #Put items in their locations
     broken_crate.add(sword)
     west_Living.add(brassKey)
     Dining.add(chair)
     Dining.add(crate)
+    
+    west_Living.add(note1)
+    Dining.add(note2)
+    Bedroom.add(note3)
     
     #Adds Walls to Rooms
     Living.add([north_Living, east_Living, south_Living, west_Living])
@@ -870,7 +876,7 @@ def objectTree(obj, depth = 0, hidden = False):
 
 #Main Game Loop
 def main():
-    user = generateWorld2()
+    user = generateWorld()
 
     global debug
     debug = False
@@ -901,7 +907,7 @@ def main():
         adjective = "None"
 
         #Define Possible Actions
-        verbs = ["help", "look", "grab", "move", "use", "unlock", "drop", "destroy"] #Possible actions
+        verbs = ["help", "look", "grab", "move", "use", "unlock", "drop", "destroy", "ask"] #Possible actions
         nouns = {"room" : user.room}
         adjectives = ["N", "E", "W", "S", "red", "yellow", "orange", "green", "blue", "purple", "oak", "metal", "broken"]
         for item in inContainer(user.room): #"Load" objects in room
@@ -1040,6 +1046,8 @@ def main():
 
         if (verb == "destroy"): #Run Destroy
             print(user.destroy(subject))
+        if(verb == "ask"):
+            print("testing this bs");
 
 main()
 
